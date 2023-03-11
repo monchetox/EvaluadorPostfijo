@@ -1,13 +1,3 @@
-/**
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * Universidad Ean (Bogotá - Colombia)
- * Departamento de Tecnologías de la Información y Comunicaciones
- * Licenciado bajo el esquema Academic Free License version 2.1
- * <p>
- * Proyecto Evaluador de Expresiones Postfijas
- * Fecha: Febrero 2021
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- */
 package universidadean.desarrollosw.postfijo;
 
 import java.io.IOException;
@@ -26,16 +16,61 @@ public class EvaluadorPostfijo {
 
     /**
      * Realiza la evaluación de la expresión postfijo utilizando una pila
+     *
      * @param expresion una lista de elementos con números u operadores
      * @return el resultado de la evaluación de la expresión.
      */
     static int evaluarPostFija(List<String> expresion) {
         Stack<Integer> pila = new Stack<>();
 
-        // TODO: Realiza la evaluación de la expresión en formato postfijo
+        for (int i = 0; i < expresion.size(); i++) {
+            String valor = expresion.get(i);
+
+
+                if (valor.equals("+")) {
+                    int numero2 = pila.pop();
+                    int numero1 = pila.pop();
+                    int resultado = (numero1 + numero2);
+                    pila.push(resultado);
+
+                }else if (valor.equals("-")) {
+                    int numero2 = pila.pop();
+                    int numero1 = pila.pop();
+                    int resultado = (numero1 - numero2);
+                    pila.push(resultado);
+
+                }else if (valor.equals("*")) {
+                    int numero2 = pila.pop();
+                    int numero1 = pila.pop();
+                    int resultado = (numero1 * numero2);
+                    pila.push(resultado);
+
+                }else if (valor.equals("/")) {
+                    int numero2 = pila.pop();
+                    int numero1 = pila.pop();
+                    int resultado = (numero1 / numero2);
+                    pila.push(resultado);
+
+                }else if (valor.equals("%")) {
+                    int numero2 = pila.pop();
+                    int numero1 = pila.pop();
+                    int resultado = (numero1 % numero2);
+                    pila.push(resultado);
+
+                }else if (valor.equals("^")) {
+                    int numero2 = pila.pop();
+                    int numero1 = pila.pop();
+                    int resultado = (numero1 ^ numero2);
+                    pila.push(resultado);
+
+                }else
+                    pila.push(Integer.parseInt(valor));
+            }
 
         return pila.pop();
     }
+
+    // TODO: Realiza la evaluación de la expresión en formato postfijo
 
     /**
      * Programa principal
