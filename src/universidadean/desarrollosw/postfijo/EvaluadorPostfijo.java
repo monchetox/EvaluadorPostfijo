@@ -60,7 +60,7 @@ public class EvaluadorPostfijo {
                 }else if (valor.equals("^")) {
                     int numero2 = pila.pop();
                     int numero1 = pila.pop();
-                    int resultado = (numero1 ^ numero2);
+                    int resultado = (int) Math.pow(numero1,numero2);
                     pila.push(resultado);
 
                 }else
