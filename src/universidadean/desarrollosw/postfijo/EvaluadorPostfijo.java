@@ -31,7 +31,10 @@ public class EvaluadorPostfijo {
      */
     static int evaluarPostFija(List<String> expresion) {
         Stack<Integer> pila = new Stack<>();
-
+        for (int i = 0; i <expresion.size(); i++){
+            if (i )
+            String c = expresion.get(i);
+        }
         // TODO: Realiza la evaluación de la expresión en formato postfijo
 
         return pila.pop();
