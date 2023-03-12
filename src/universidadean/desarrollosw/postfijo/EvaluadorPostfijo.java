@@ -32,9 +32,53 @@ public class EvaluadorPostfijo {
     static int evaluarPostFija(List<String> expresion) {
         Stack<Integer> pila = new Stack<>();
 
-        // TODO: Realiza la evaluación de la expresión en formato postfijo
+        for (String elemento : expresion) {
+            if (esNumero(elemento)) {
+                pila.push(Integer.parseInt(elemento));
+            } else if (esOperador(elemento)) {
+                int b = pila.pop();
+                int a = pila.pop();
+                int resultado = aplicarOperador(elemento.charAt(0), a, b);
+                pila.push(resultado);
+            } else {
+                throw new IllegalArgumentException("Elemento '" + elemento + "' desconocido");
+            }
+        }
 
         return pila.pop();
+    }
+
+    private static boolean esNumero(String elemento) {
+        return elemento.matches("-?\\d+");
+    }
+
+    private static boolean esOperador(String elemento) {
+        return elemento.matches("[+\\-*/%^]");
+    }
+
+    private static int aplicarOperador(char operador, int a, int b) {
+        switch (operador) {
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case '*':
+                return a * b;
+            case '/':
+                if (b == 0) {
+                    throw new IllegalArgumentException("División por cero");
+                }
+                return a / b;
+            case '%':
+                if (b == 0) {
+                    throw new IllegalArgumentException("Módulo por cero");
+                }
+                return a % b;
+            case '^':
+                return (int) Math.pow(a, b);
+            default:
+                throw new IllegalArgumentException("Operador '" + operador + "' desconocido");
+        }
     }
 
     /**
@@ -49,10 +93,9 @@ public class EvaluadorPostfijo {
         try {
             List<String> expresion = Token.dividir(linea);
             System.out.println(evaluarPostFija(expresion));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.printf("Error grave en la expresión: %s", e.getMessage());
         }
-
     }
 }
+
