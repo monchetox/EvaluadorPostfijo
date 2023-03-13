@@ -1,0 +1,1 @@
+# EvaluadorPostfijoescribir el método «evaluarPostFija» que se encuentra dentro de esa clase. Este método realiza la evaluación de la expresión postfija utilizando una pila y produciendo el resultado final.
