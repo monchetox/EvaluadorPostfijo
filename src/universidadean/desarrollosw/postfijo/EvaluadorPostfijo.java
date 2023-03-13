@@ -32,11 +32,45 @@ public class EvaluadorPostfijo {
     static int evaluarPostFija(List<String> expresion) {
         Stack<Integer> pila = new Stack<>();
         for (int i = 0; i <expresion.size(); i++){
-            if (i )
-            String c = expresion.get(i);
-        }
-        // TODO: Realiza la evaluación de la expresión en formato postfijo
+            String valor = expresion.get(i);
+            for (int j = 0; j < valor.length(); j++ ){
+                char c = valor.charAt(j);
+                if (Character.isDigit(c)){
+                    pila.push(c - '0');
+                }else
+                {
+                    int val1 = pila.pop();
+                    int val2 = pila.pop();
 
+                    switch(c)
+                    {
+                        case '+':
+                            pila.push(val2+val1);
+                            break;
+
+                        case '-':
+                            pila.push(val2- val1);
+                            break;
+
+                        case '/':
+                            pila.push(val2/val1);
+                            break;
+
+                        case '*':
+                            pila.push(val2*val1);
+                            break;
+
+                        case '%':
+                            pila.push(val1%val2);
+                            break;
+
+                        case '^':
+                            pila.push((int)Math.pow(val1,val2));
+                            break;
+                    }
+                }
+            }
+        }
         return pila.pop();
     }
 
