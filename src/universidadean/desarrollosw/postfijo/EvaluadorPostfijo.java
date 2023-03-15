@@ -23,54 +23,54 @@ public class EvaluadorPostfijo {
     static int evaluarPostFija(List<String> expresion) {
         Stack<Integer> pila = new Stack<>();
 
-        for (int i = 0; i < expresion.size(); i++) {
-            String valor = expresion.get(i);
 
-
-                if (valor.equals("+")) {
-                    int numero2 = pila.pop();
-                    int numero1 = pila.pop();
-                    int resultado = (numero1 + numero2);
-                    pila.push(resultado);
-
-                }else if (valor.equals("-")) {
-                    int numero2 = pila.pop();
-                    int numero1 = pila.pop();
-                    int resultado = (numero1 - numero2);
-                    pila.push(resultado);
-
-                }else if (valor.equals("*")) {
-                    int numero2 = pila.pop();
-                    int numero1 = pila.pop();
-                    int resultado = (numero1 * numero2);
-                    pila.push(resultado);
-
-                }else if (valor.equals("/")) {
-                    int numero2 = pila.pop();
-                    int numero1 = pila.pop();
-                    int resultado = (numero1 / numero2);
-                    pila.push(resultado);
-
-                }else if (valor.equals("%")) {
-                    int numero2 = pila.pop();
-                    int numero1 = pila.pop();
-                    int resultado = (numero1 % numero2);
-                    pila.push(resultado);
-
-                }else if (valor.equals("^")) {
-                    int numero2 = pila.pop();
-                    int numero1 = pila.pop();
-                    int resultado = (int) Math.pow(numero1,numero2);
-                    pila.push(resultado);
-
-                }else
-                    pila.push(Integer.parseInt(valor));
+        for (String elemento : expresion) {
+            if (esNumero(elemento)) {
+                pila.push(Integer.parseInt(elemento));
+            } else if (esOperador(elemento)) {
+                int b = pila.pop();
+                int a = pila.pop();
+                int resultado = aplicarOperador(elemento.charAt(0), a, b);
+                pila.push(resultado);
+            } else {
+                throw new IllegalArgumentException("Elemento '" + elemento + "' desconocido");
             }
+        }
 
-        return pila.pop();
+
+    private static boolean esNumero(String elemento) {
+        return elemento.matches("-?\\d+");
     }
 
-    // TODO: Realiza la evaluación de la expresión en formato postfijo
+    private static boolean esOperador(String elemento) {
+        return elemento.matches("[+\\-*/%^]");
+    }
+
+    private static int aplicarOperador(char operador, int a, int b) {
+        switch (operador) {
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case '*':
+                return a * b;
+            case '/':
+                if (b == 0) {
+                    throw new IllegalArgumentException("División por cero");
+                }
+                return a / b;
+            case '%':
+                if (b == 0) {
+                    throw new IllegalArgumentException("Módulo por cero");
+                }
+                return a % b;
+            case '^':
+                return (int) Math.pow(a, b);
+            default:
+                throw new IllegalArgumentException("Operador '" + operador + "' desconocido");
+        }
+    }
+
 
     /**
      * Programa principal
@@ -84,10 +84,9 @@ public class EvaluadorPostfijo {
         try {
             List<String> expresion = Token.dividir(linea);
             System.out.println(evaluarPostFija(expresion));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.printf("Error grave en la expresión: %s", e.getMessage());
         }
-
     }
 }
+
