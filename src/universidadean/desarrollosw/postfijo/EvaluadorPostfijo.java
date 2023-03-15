@@ -23,7 +23,6 @@ public class EvaluadorPostfijo {
     static int evaluarPostFija(List<String> expresion) {
         Stack<Integer> pila = new Stack<>();
 
-
         for (String elemento : expresion) {
             if (esNumero(elemento)) {
                 pila.push(Integer.parseInt(elemento));
@@ -37,6 +36,8 @@ public class EvaluadorPostfijo {
             }
         }
 
+        return pila.pop();
+    }
 
     private static boolean esNumero(String elemento) {
         return elemento.matches("-?\\d+");
